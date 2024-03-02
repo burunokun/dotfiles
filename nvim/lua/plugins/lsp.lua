@@ -1,18 +1,5 @@
 return {
     {
-        "rose-pine/neovim",
-        name = "rose-pine",
-        config = function()
-            require("rose-pine").setup({
-                disable_background = true,
-                disable_float_background = true,
-            })
-            vim.cmd.colorscheme("rose-pine")
-            vim.api.nvim_set_hl(0, "NormalNc", { bg = "None" })
-        end,
-    },
-
-    {
         "neovim/nvim-lspconfig",
         cmd = { "LspInfo", "LspStart" },
         event = { "BufReadPre", "BufNewFile" },
@@ -28,16 +15,9 @@ return {
             vim.keymap.set('n', ']d', vim.diagnostic.goto_next)
             vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist)
 
-            -- Use LspAttach autocommand to only map the following keys
-            -- after the language server attaches to the current buffer
             vim.api.nvim_create_autocmd('LspAttach', {
                 group = vim.api.nvim_create_augroup('UserLspConfig', {}),
                 callback = function(ev)
-                    -- Enable completion triggered by <c-x><c-o>
-                    -- vim.bo[ev.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
-
-                    -- Buffer local mappings.
-                    -- See `:help vim.lsp.*` for documentation on any of the below functions
                     local opts = { buffer = ev.buf }
                     vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
                     vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
@@ -62,6 +42,8 @@ return {
         dependencies = {
             "hrsh7th/cmp-nvim-lsp",
             "hrsh7th/cmp-buffer",
+            "hrsh7th/cmp-path",
+            "hrsh7th/cmp-cmdline",
             "L3MON4D3/LuaSnip",
         },
         config = function()
@@ -72,10 +54,10 @@ return {
                         require("luasnip").lsp_expand(args.body)
                     end
                 },
-                window = {
-                    completion = cmp.config.window.bordered(),
-                    documentation = cmp.config.window.bordered(),
-                },
+                -- window = {
+                --     completion = cmp.config.window.bordered(),
+                --     documentation = cmp.config.window.bordered(),
+                -- },
                 mapping = cmp.mapping.preset.insert({
                     ["<C-u>"] = cmp.mapping.scroll_docs(-4),
                     ["<C-d>"] = cmp.mapping.scroll_docs(4),
@@ -90,6 +72,24 @@ return {
                     { name = "buffer" },
                 })
 
+            })
+
+            -- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).
+            cmp.setup.cmdline({ '/', '?' }, {
+                mapping = cmp.mapping.preset.cmdline(),
+                sources = {
+                    { name = "buffer" }
+                }
+            })
+
+            -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
+            cmp.setup.cmdline(':', {
+                mapping = cmp.mapping.preset.cmdline(),
+                sources = cmp.config.sources({
+                    { name = "path" }
+                }, {
+                        { name = "cmdline" }
+                    })
             })
             local capabilities = require("cmp_nvim_lsp").default_capabilities()
         end

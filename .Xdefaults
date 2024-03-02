@@ -6,7 +6,8 @@ Xft.hintstyle: 1
 URxvt.title: rxvt
 URxvt.termName: xterm-256color
 URxvt.depth: 32
-URxvt.font: xft:FiraCode-Regular:size=12
+# URxvt.font: xft:FiraCode-Regular:size=16
+URxvt.font: xft:JetBrainsMono-Regular:size=12
 URxvt.transparent: false
 URxvt.scrollBar: false
 URxvt.internalBorder: 4
@@ -31,4 +32,26 @@ URxvt.keysym.Control-Right: \033[1;5C
 URxvt.keysym.Control-Left:  \033[1;5D
 
 URxvt*foreground: #E4E4EF
-URxvt*background: #181818
+URxvt*background: #0F1F2C
+
+URxvt*cursorColor: #56C3B7
+URxvt*cursorColor2: #0F1F2C
+
+URxvt*color0: #15161E
+URxvt*color1: #F7768E
+URxvt*color2: #9ECE6A
+URxvt*color3: #E0AF68
+URxvt*color4: #7AA2F7
+URxvt*color5: #BB9AF7
+URxvt*color6: #7DCFFF
+URxvt*color7: #A9B1D6
+
+URxvt*color8: #414868
+URxvt*color9: #F7768E
+URxvt*color10: #9ECE6A
+URxvt*color11: #E0AF68
+URxvt*color12: #7AA2F7
+URxvt*color13: #BB9AF7
+URxvt*color14: #7DCFFF
+URxvt*color15: #C0CAF5
+
